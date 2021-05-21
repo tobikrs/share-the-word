@@ -152,11 +152,19 @@ class Share_The_Word {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Share_The_Word_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Share_The_Word_Admin( $this->get_plugin_name(), $this->get_plugin_prefix(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $plugin_admin, 'new_cpt_sermon' );
+		$this->loader->add_action( 'init', $plugin_admin, 'new_tax_series' );
+		$this->loader->add_action( 'init', $plugin_admin, 'new_sermon_meta' );
+		$this->loader->add_action( 'init', $plugin_admin, 'new_sermon_meta_block' );
 
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
+		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 	}
 
 	/**
@@ -168,7 +176,7 @@ class Share_The_Word {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Share_The_Word_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Share_The_Word_Public( $this->get_plugin_name(), $this->get_plugin_prefix(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -193,6 +201,17 @@ class Share_The_Word {
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
+	}
+
+	/**
+	 * The prefix of the plugin used to uniquely identify it within the context of
+	 * WordPress generated from the $plugin_name.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The prefix of the plugin.
+	 */
+	public function get_plugin_prefix() {
+		return implode( '', array_map( fn ($word) => $word[0], explode( '-', $this->plugin_name ) ) ) . '_';
 	}
 
 	/**

@@ -30,7 +30,7 @@ class Share_The_Word_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		do_action( 'share_the_word_before_activate' );
 	}
 
 }

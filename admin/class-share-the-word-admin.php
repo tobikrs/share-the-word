@@ -32,6 +32,15 @@ class Share_The_Word_Admin {
 	private $plugin_name;
 
 	/**
+	 * The prefix of this plugin.
+	 * 
+	 * @since   1.0.0
+	 * @access  private
+	 * @var     string      $prefix     The prefix of this plugin.
+	 */
+	private $prefix;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -44,12 +53,14 @@ class Share_The_Word_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string    $plugin_name   The name of this plugin.
+	 * @param      string    $prefix        The prefix of this plugin.
+	 * @param      string    $version       The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $prefix, $version ) {
 
 		$this->plugin_name = $plugin_name;
+		$this->prefix = $prefix;
 		$this->version = $version;
 
 	}
@@ -98,6 +109,184 @@ class Share_The_Word_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/share-the-word-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_edtior_scripts() {
+		// wp_enqueue_script( $this->plugin_name . '-editor', plugin_dir_url( __FILE__ ) .)
+
+	}
+
+	/**
+	* Register the administration menu for this plugin into the WordPress Dashboard menu.
+	*
+	* @since 1.0.0
+	*/
+	public function add_plugin_admin_menu() {
+		add_options_page( __( 'Sermons Settings', $this->plugin_name ), __( 'Sermons', $this->plugin_name ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+	}
+
+	/**
+	* Add settings action link to the plugins page.
+	*
+	* @since 1.0.0
+	*/
+	public function add_action_links( $links ) {
+		$settings_link = array(
+			'<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __('Settings', $this->plugin_name) . '</a>',
+		);
+		return array_merge( $settings_link, $links );
+	}
+
+	/**
+	* Render the settings page for this plugin.
+	*
+	* @since 1.0.0
+	*/
+	public function display_plugin_setup_page() {
+		include_once( 'partials/share-the-word-admin-display.php' );
+	}
+
+	/**
+	 * Creates a new custom post type
+	 *
+	 * @since 	1.0.0
+	 * @access 	public
+	 * @uses 	register_post_type()
+	 */
+	public function new_cpt_sermon() {
+
+		$cpt_name 	= $this->prefix . 'sermon';
+		$rewrite_slug = apply_filters( $this->prefix . 'sermons_rewrite_slug', 'sermon' );
+
+		$labels = array(
+			'name'               => _x( 'Sermons', 'post type general name', $this->plugin_name ),
+			'singular_name'      => _x( 'Sermon', 'post type singular name', $this->plugin_name ),
+			'menu_name'          => _x( 'Sermons', 'admin menu', $this->plugin_name ),
+			'name_admin_bar'     => _x( 'Sermon', 'add new on admin bar', $this->plugin_name ),
+			'add_new'            => _x( 'Add New', 'sermon', $this->plugin_name ),
+			'add_new_item'       => __( 'Add New Sermon', $this->plugin_name ),
+			'new_item'           => __( 'New Sermon', $this->plugin_name ),
+			'edit_item'          => __( 'Edit Sermon', $this->plugin_name ),
+			'view_item'          => __( 'View Sermon', $this->plugin_name ),
+			'all_items'          => __( 'All Sermons', $this->plugin_name ),
+			'search_items'       => __( 'Search Sermons', $this->plugin_name ),
+			'parent_item_colon'  => __( 'Parent Sermons:', $this->plugin_name ),
+			'not_found'          => __( 'No sermons found.', $this->plugin_name ),
+			'not_found_in_trash' => __( 'No sermons found in Trash.', $this->plugin_name ),
+		);
+
+		$labels = apply_filters( $this->prefix . 'sermon_labels', $labels);
+
+		$args = array(
+			'labels' => $labels,
+			'public' => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_in_menu'       => true,
+			'query_var'          => true,
+			'has_archive' => true,
+			'rewrite' => array( 'slug' =>  $rewrite_slug ),
+			'capability_type'    => 'post',
+			'hierarchical'       => false,
+			'menu_position'      => 58,
+			'menu_icon'          => 'dashicons-format-status',
+			'show_in_rest'       => true,
+			'rest_base'          => 'sermon',
+			'supports'           => array( 'title', 'excerpt', 'editor', 'thumbnail', 'custom-fields', 'register_post_meta')
+		);
+
+		$args = apply_filters( $this->prefix . 'sermon_cpt_args', $args );
+
+		register_post_type( $cpt_name, $args );
+
+	}
+
+	/**
+	 * Creates a new taxonomy series
+	 *
+	 * @since 	1.0.0
+	 * @access 	public
+	 * @uses 	register_taxonomy()
+	 */
+	public function new_tax_series() {
+		
+		$labels = array(
+			'name'              => _x( 'Series', 'taxonomy general name', $this->plugin_name),
+			'singular_name'     => _x( 'Series', 'taxonomy singular name', $this->plugin_name ),
+			'search_items'      => __( 'Search Series', $this->plugin_name ),
+			'all_items'         => __( 'All Series', $this->plugin_name ),
+			'parent_item'       => __( 'Parent Series', $this->plugin_name ),
+			'parent_item_colon' => __( 'Parent Series:', $this->plugin_name ),
+			'edit_item'         => __( 'Edit Series', $this->plugin_name ),
+			'update_item'       => __( 'Update Series', $this->plugin_name ),
+			'add_new_item'      => __( 'Add New Series', $this->plugin_name ),
+			'new_item_name'     => __( 'New Series Name', $this->plugin_name ),
+			'menu_name'         => __( 'Series', $this->plugin_name ),
+		);
+
+		$labels = apply_filters($this->prefix . 'sermon_series_labels', $labels);
+
+		$sermon_rewrite_slug = apply_filters( $this->prefix . 'sermons_rewrite_slug', 'sermon' );
+
+
+		$args = array(
+			'hierarchical'       => true,
+			'labels'             => $labels,
+			'show_ui'            => true,
+			'has_archive'        => true,
+			'show_in_rest'       => true,
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_admin_column'  => true,
+			'query_var'          => true,
+			'rewrite'            => array( 'slug' => $sermon_rewrite_slug . '/series', 'with_front' => false ),
+		);
+
+		register_taxonomy( 'series', array( $this->prefix . 'sermon' ), $args );
+	}
+
+
+	/**
+	 * Creates custom meta tag fields for sermons
+	 *
+	 * @since 	1.0.0
+	 * @access 	public
+	 * @uses 	register_post_type()
+	 */
+	public function new_sermon_meta() {
+		// BibleVerse
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'sermon_bibleverse', array(
+			'show_in_rest' => true,
+			'type' => 'string',
+			'single' => true
+		) );
+	}
+
+	/**
+	 * Registers the block using the metadata loaded from the `block.json` file.
+	 * Behind the scenes, it registers also all assets so they can be enqueued
+	 * through the block editor in the corresponding context.
+	 *
+	 * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
+	 */
+	function new_sermon_meta_block() {
+		$plugin_dir = plugin_dir_path( __DIR__ );
+		$bibleverse_block = register_block_type_from_metadata( $plugin_dir );
+
+		// Define as default template
+		if ( $bibleverse_block ) {
+			$post_type_obj = get_post_type_object( $this->prefix . 'sermon' );
+			$post_type_obj->template = array(
+				array( $bibleverse_block->name ),
+				array( "core/audio"),
+				array( "core/video"),
+			);
+		}
 	}
 
 }

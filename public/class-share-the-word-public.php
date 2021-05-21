@@ -32,6 +32,14 @@ class Share_The_Word_Public {
 	private $plugin_name;
 
 	/**
+	 * The prefix of this plugin.
+	 * 
+	 * @access  private
+	 * @var     string      $prefix     The prefix of this plugin.
+	 */
+	private $prefix;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -44,12 +52,14 @@ class Share_The_Word_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string    $plugin_name   The name of this plugin.
+	 * @param      string    $prefix        The prefix of this plugin.
+	 * @param      string    $version       The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $prefix, $version ) {
 
 		$this->plugin_name = $plugin_name;
+		$this->$prefix = $prefix;
 		$this->version = $version;
 
 	}

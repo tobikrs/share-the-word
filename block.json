@@ -1,0 +1,14 @@
+{
+	"apiVersion": 2,
+	"name": "share-the-word/sermon-bibleverse",
+	"title": "Sermon Bible Verse",
+	"category": "text",
+	"description": "Main Bibleverse of the Sermon.",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "share-the-word",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}
