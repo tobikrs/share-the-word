@@ -21,10 +21,10 @@ export default function Edit() {
 		[]
 	);
 	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
-	const metaBibleVerse = meta[ 'stw_sermon_bibleverse' ];
+	const metaBibleVerse = meta[ 'stw_bibleverse' ];
 
 	function updateMetaBibleVerse( newValue ) {
-		setMeta( { ...meta, stw_sermon_bibleverse: newValue } );
+		setMeta( { ...meta, stw_bibleverse: newValue } );
 	}
 
 	return (

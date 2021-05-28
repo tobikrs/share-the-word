@@ -183,14 +183,14 @@ class Share_The_Word_Admin {
 		$labels = apply_filters( $this->prefix . 'sermon_labels', $labels);
 
 		$args = array(
-			'labels' => $labels,
-			'public' => true,
+			'labels'             => $labels,
+			'public'             => true,
 			'publicly_queryable' => true,
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'query_var'          => true,
-			'has_archive' => true,
-			'rewrite' => array( 'slug' =>  $rewrite_slug ),
+			'has_archive'        => true,
+			'rewrite'            => array( 'slug' =>  $rewrite_slug ),
 			'capability_type'    => 'post',
 			'hierarchical'       => false,
 			'menu_position'      => 58,
@@ -260,7 +260,7 @@ class Share_The_Word_Admin {
 	 */
 	public function new_sermon_meta() {
 		// BibleVerse
-		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'sermon_bibleverse', array(
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'bibleverse', array(
 			'show_in_rest' => true,
 			'type' => 'string',
 			'single' => true
