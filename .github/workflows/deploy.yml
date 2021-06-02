@@ -1,0 +1,49 @@
+# CD Idea from https://css-tricks.com/continuous-deployments-for-wordpress-using-github-actions/
+
+name: Deploy Plugin
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  deploy_job:
+    runs-on: ubuntu-latest
+    name: deploy
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Deploy (to chkharburg.de)
+      env:
+        dest: 'krauselig.eu@ssh.strato.de:STRATO-apps/wordpress_02/app/wp-content/plugins/share-the-word'
+      run: |
+        echo "${{secrets.DEPLOY_KEY}}" > deploy_key
+        chmod 600 ./deploy_key
+        rsync -chav --delete \
+          -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
+          --exclude /deploy_key \
+          --exclude /.git/ \
+          --exclude /.github/ \
+          --exclude /.gitignore \
+          --exclude /node_modules/ \
+          --exclude /src/ \
+          --exclude /package*.json \
+          --exclude /yarn.lock \
+          --exclude /webpack.config.js \
+          ./ ${{env.dest}}
