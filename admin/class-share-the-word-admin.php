@@ -267,12 +267,20 @@ class Share_The_Word_Admin {
 			'description'  => __( 'The main bible verse of the sermon', $this->plugin_name ),
 		) );
 
-		// Length
-		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'length', array(
+		// Preacher
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'preacher', array(
 			'show_in_rest' => true,
 			'type'         => 'string',
 			'single'       => true,
-			'description'  => __( 'The length of the (recorded) sermon. Ether the audio or video version.', $this->plugin_name ),
+			'description'  => __( 'The preacher of the sermon', $this->plugin_name ),
+		) );
+
+		// Duration
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'duration', array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'description'  => __( 'The duration of the (recorded) sermon. Eather the audio or video version.', $this->plugin_name ),
 		) );
 
 		// Audio

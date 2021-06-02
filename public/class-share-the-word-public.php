@@ -59,7 +59,7 @@ class Share_The_Word_Public {
 	public function __construct( $plugin_name, $prefix, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->$prefix = $prefix;
+		$this->prefix = $prefix;
 		$this->version = $version;
 
 	}
@@ -110,4 +110,41 @@ class Share_The_Word_Public {
 
 	}
 
+
+	public function show_sermon_meta_media( $content ) {
+		if ( is_singular( $this->prefix . 'sermon' ) && in_the_loop() && is_main_query() ) {
+			$meta_audio = get_post_meta( get_the_ID(), 'stw_audio', true );
+
+			if ( $meta_audio ) {
+				$meta_audio_block = $this->get_meta_audio_block( $meta_audio );
+
+				if ( $meta_audio_block ) {
+					$content = sprintf(
+						"%s\n%s", render_block( $meta_audio_block ), $content );
+				}
+			}
+
+			// TODO: video
+			// TODO: embeds
+		}
+
+		return $content;
+	}
+
+	private function get_meta_audio_block( $meta_audio ) {
+		if ( isset( $meta_audio['src'] ) && isset( $meta_audio['is_file'] ) && $meta_audio['is_file'] && isset($meta_audio['is_embed'] ) ) {
+			$content = sprintf(
+				'<!-- wp:audio -->
+				<figure class="wp-block-audio audio-meta"><audio controls src="%s"></audio></figure>
+				<!-- /wp:audio -->', esc_url( $meta_audio['src'] ) );
+
+			$blocks = parse_blocks( $content );
+
+			if ( is_array( $blocks ) && sizeof( $blocks ) > 0 ) {
+				return $blocks[0];
+			}
+		}
+
+		return false;
+	}
 }

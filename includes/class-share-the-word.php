@@ -156,6 +156,7 @@ class Share_The_Word {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
 		$this->loader->add_action( 'init', $plugin_admin, 'new_cpt_sermon' );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_tax_series' );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_sermon_meta' );
@@ -180,6 +181,8 @@ class Share_The_Word {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		$this->loader->add_filter( 'the_content', $plugin_public, 'show_sermon_meta_media' );
 
 	}
 
