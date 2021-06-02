@@ -262,8 +262,83 @@ class Share_The_Word_Admin {
 		// BibleVerse
 		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'bibleverse', array(
 			'show_in_rest' => true,
-			'type' => 'string',
-			'single' => true
+			'type'         => 'string',
+			'single'       => true,
+			'description'  => __( 'The main bible verse of the sermon', $this->plugin_name ),
+		) );
+
+		// Length
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'length', array(
+			'show_in_rest' => true,
+			'type'         => 'string',
+			'single'       => true,
+			'description'  => __( 'The length of the (recorded) sermon. Ether the audio or video version.', $this->plugin_name ),
+		) );
+
+		// Audio
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'audio', array(
+			'show_in_rest' => array(
+				'schema' => array(
+					'type' => 'object',
+					'properties' => array(
+						'src' => array(
+							'type' => 'string',
+							'format' => 'uri'
+						),
+						'is_file' => array(
+							'type' => 'boolean'
+						),
+						'is_embed' => array(
+							'type' => 'boolean'
+						),
+						'provider_slug' => array(
+							'type' => 'string'
+						),
+					),
+					'additionalProperties' => array( 'type' => 'boolean' )
+				)
+			),
+			'type'         => 'object',
+			'single'       => true,
+			'default'      => array(
+				'src' => '',
+				'is_file' => false,
+				'is_embed' => false,
+				'provider_slug' => '',
+			)
+		) );
+
+		// Video
+		register_post_meta( $this->prefix . 'sermon', $this->prefix . 'video', array(
+			'show_in_rest' => array(
+				'schema' => array(
+					'type' => 'object',
+					'properties' => array(
+						'src' => array(
+							'type' => 'string',
+							'format' => 'uri'
+						),
+						'is_file' => array(
+							'type' => 'boolean'
+						),
+						'is_embed' => array(
+							'type' => 'boolean'
+						),
+						'provider_slug' => array(
+							'type' => 'string'
+						),
+					),
+					'additionalProperties' => array( 'type' => 'boolean' )
+				)
+			),
+			'type'         => 'object',
+			'single'       => true,
+			'default'      => array(
+				'src' => '',
+				'is_file' => false,
+				'is_embed' => false,
+				'provider_slug' => '',
+			)
 		) );
 	}
 

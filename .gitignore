@@ -38,6 +38,8 @@ intermediate
 .idea
 .vscode
 cache
+import-scripts
+build
 
 
 # Logs
@@ -67,6 +69,3 @@ node_modules/
 
 # dotenv environment variables file
 .env
-
-# build
-build
