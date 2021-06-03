@@ -29,9 +29,28 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Deploy (to chkharburg.de)
+    - name: Deploy to chkharburg.de (Preview Stage)
       env:
         dest: 'krauselig.eu@ssh.strato.de:STRATO-apps/wordpress_02/app/wp-content/plugins/share-the-word'
+      run: |
+        echo "${{secrets.DEPLOY_KEY}}" > deploy_key
+        chmod 600 ./deploy_key
+        rsync -chav --delete \
+          -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
+          --exclude /deploy_key \
+          --exclude /.git/ \
+          --exclude /.github/ \
+          --exclude /.gitignore \
+          --exclude /node_modules/ \
+          --exclude /src/ \
+          --exclude /package*.json \
+          --exclude /yarn.lock \
+          --exclude /webpack.config.js \
+          ./ ${{env.dest}}
+
+    - name: Deploy to chkharburg.de (Next Stage)
+      env:
+        dest: 'krauselig.eu@ssh.strato.de:STRATO-apps/ckharburg.de/app/wp-content/plugins/share-the-word'
       run: |
         echo "${{secrets.DEPLOY_KEY}}" > deploy_key
         chmod 600 ./deploy_key
