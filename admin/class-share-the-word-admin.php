@@ -127,7 +127,7 @@ class Share_The_Word_Admin {
 	* @since 1.0.0
 	*/
 	public function add_plugin_admin_menu() {
-		add_options_page( __( 'Sermons Settings', $this->plugin_name ), __( 'Sermons', $this->plugin_name ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+		add_options_page( __( 'Share The Word Settings', $this->plugin_name ), __( 'Share The Word', $this->plugin_name ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
 	/**
