@@ -113,6 +113,7 @@ class Share_The_Word_Public {
 
 	public function show_sermon_meta_media( $content ) {
 		if ( is_singular( $this->prefix . 'sermon' ) && in_the_loop() && is_main_query() ) {
+			$meta_content = "";
 			$meta_audio = get_post_meta( get_the_ID(), 'stw_audio', true );
 
 			if ( $meta_audio ) {
@@ -124,19 +125,111 @@ class Share_The_Word_Public {
 				}
 			}
 
-			// TODO: video
-			// TODO: embeds
+			$meta_video = get_post_meta( get_the_ID(), 'stw_video', true );
+
+			if ( $meta_video ) {
+				$meta_video_block = $this->get_meta_video_block( $meta_video );
+
+				if ( $meta_video_block ) {
+					$content = sprintf(
+						"%s\n%s", render_block( $meta_video_block ), $content );
+				}
+			}
+
+			// DEBUG: Only for getting the encoded (or unparsed) block
+			// global $post;
+			// $content = sprintf( "<pre>%s</pre>%s", esc_attr( $post->post_content ), $content );
 		}
 
 		return $content;
 	}
 
+
 	private function get_meta_audio_block( $meta_audio ) {
-		if ( isset( $meta_audio['src'] ) && isset( $meta_audio['is_file'] ) && $meta_audio['is_file'] && isset($meta_audio['is_embed'] ) ) {
-			$content = sprintf(
-				'<!-- wp:audio -->
-				<figure class="wp-block-audio audio-meta"><audio controls src="%s"></audio></figure>
-				<!-- /wp:audio -->', esc_url( $meta_audio['src'] ) );
+		$src = $meta_audio['src'];
+
+		if ( isset( $src ) && $src && isset( $meta_audio['is_file'] ) && isset($meta_audio['is_embed'] ) ) {
+			$content = '';
+
+			if ( $meta_audio['is_file'] ) {
+				$content = sprintf(
+					'<!-- wp:audio -->
+					<figure class="wp-block-audio audio-meta"><audio controls src="%s"></audio></figure>
+					<!-- /wp:audio -->', esc_url( $src ) );
+
+			} elseif ( $meta_audio['is_embed'] && isset( $meta_audio['provider_slug'] ) ) {
+				$args_classes = array();
+				$embed_classes = array( "wp-block-embed", "audio-meta", "is-type-rich" );
+
+				switch ( $meta_audio['provider_slug'] ) {
+					case 'spotify':
+						$embed_classes[] = "is-provider-youtube";
+						$embed_classes[] = "wp-block-embed-youtube";
+						$args_classes[] = "wp-embed-aspect-16-9";
+						$args_classes[] = "wp-has-aspect-ratio";
+						
+						break;
+
+					default:
+						return false;
+				}
+
+				$content = sprintf(
+					'<!-- wp:embed {"url":"%1$s","type":"rich","providerNameSlug":"%2$s","responsive":true} -->
+					<figure class="%3$s %4$s"><div class="wp-block-embed__wrapper">
+					%1$s
+					</div></figure>
+					<!-- /wp:embed -->', $src, $meta_audio['provider_slug'], implode( " ", $embed_classes ), implode( " ", $args_classes )
+				);
+			}
+	
+			$blocks = parse_blocks( $content );
+
+			if ( is_array( $blocks ) && sizeof( $blocks ) > 0 ) {
+				return $blocks[0];
+			}
+		}
+
+		return false;
+	}
+
+	private function get_meta_video_block( $meta_video ) {
+		$src = $meta_video['src'];
+
+		if ( isset( $src ) && $src && isset( $meta_video['is_file'] ) && isset($meta_video['is_embed'] ) ) {
+			$content = '';
+
+			if ( $meta_video['is_file'] ) {
+				$content = sprintf(
+				'<!-- wp:video -->
+				<figure class="wp-block-video video-meta"><video controls src="%s"></video></figure>
+				<!-- /wp:video -->', esc_url( $src ) );
+
+			} elseif ( $meta_video['is_embed'] && isset( $meta_video['provider_slug'] ) ) {
+				$args_classes = array();
+				$embed_classes = array( "wp-block-embed", "video-meta", "is-type-video" );
+
+				switch ( $meta_video['provider_slug'] ) {
+					case 'youtube':
+						$embed_classes[] = "is-provider-youtube";
+						$embed_classes[] = "wp-block-embed-youtube";
+						$args_classes[] = "wp-embed-aspect-16-9";
+						$args_classes[] = "wp-has-aspect-ratio";
+						
+						break;
+
+					default:
+						break;
+				}
+
+				$content = sprintf(
+					'<!-- wp:embed {"url":"%1$s","type":"video","providerNameSlug":"%2$s","responsive":true,"className":"%4$s"} -->
+					<figure class="%3$s %4$s"><div class="wp-block-embed__wrapper">
+					%1$s
+					</div></figure>
+					<!-- /wp:embed -->', $src, $meta_video['provider_slug'], implode( " ", $embed_classes ), implode( " ", $args_classes )
+				);
+			}
 
 			$blocks = parse_blocks( $content );
 

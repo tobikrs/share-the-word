@@ -127,7 +127,7 @@ class Share_The_Word_Admin {
 	* @since 1.0.0
 	*/
 	public function add_plugin_admin_menu() {
-		add_options_page( __( 'Sermons Settings', $this->plugin_name ), __( 'Sermons', $this->plugin_name ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+		add_options_page( __( 'Share The Word Settings', 'share-the-word' ), __( 'Share The Word', 'share-the-word' ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
 	/**
@@ -164,20 +164,20 @@ class Share_The_Word_Admin {
 		$rewrite_slug = apply_filters( $this->prefix . 'sermons_rewrite_slug', 'sermon' );
 
 		$labels = array(
-			'name'               => _x( 'Sermons', 'post type general name', $this->plugin_name ),
-			'singular_name'      => _x( 'Sermon', 'post type singular name', $this->plugin_name ),
-			'menu_name'          => _x( 'Sermons', 'admin menu', $this->plugin_name ),
-			'name_admin_bar'     => _x( 'Sermon', 'add new on admin bar', $this->plugin_name ),
-			'add_new'            => _x( 'Add New', 'sermon', $this->plugin_name ),
-			'add_new_item'       => __( 'Add New Sermon', $this->plugin_name ),
-			'new_item'           => __( 'New Sermon', $this->plugin_name ),
-			'edit_item'          => __( 'Edit Sermon', $this->plugin_name ),
-			'view_item'          => __( 'View Sermon', $this->plugin_name ),
-			'all_items'          => __( 'All Sermons', $this->plugin_name ),
-			'search_items'       => __( 'Search Sermons', $this->plugin_name ),
-			'parent_item_colon'  => __( 'Parent Sermons:', $this->plugin_name ),
-			'not_found'          => __( 'No sermons found.', $this->plugin_name ),
-			'not_found_in_trash' => __( 'No sermons found in Trash.', $this->plugin_name ),
+			'name'               => _x( 'Sermons', 'post type general name', 'share-the-word' ),
+			'singular_name'      => _x( 'Sermon', 'post type singular name', 'share-the-word' ),
+			'menu_name'          => _x( 'Sermons', 'admin menu', 'share-the-word' ),
+			'name_admin_bar'     => _x( 'Sermon', 'add new on admin bar', 'share-the-word' ),
+			'add_new'            => _x( 'Add New', 'sermon', 'share-the-word' ),
+			'add_new_item'       => __( 'Add New Sermon', 'share-the-word' ),
+			'new_item'           => __( 'New Sermon', 'share-the-word' ),
+			'edit_item'          => __( 'Edit Sermon', 'share-the-word' ),
+			'view_item'          => __( 'View Sermon', 'share-the-word' ),
+			'all_items'          => __( 'All Sermons', 'share-the-word' ),
+			'search_items'       => __( 'Search Sermons', 'share-the-word' ),
+			'parent_item_colon'  => __( 'Parent Sermons:', 'share-the-word' ),
+			'not_found'          => __( 'No sermons found.', 'share-the-word' ),
+			'not_found_in_trash' => __( 'No sermons found in Trash.', 'share-the-word' ),
 		);
 
 		$labels = apply_filters( $this->prefix . 'sermon_labels', $labels);
@@ -217,16 +217,16 @@ class Share_The_Word_Admin {
 		
 		$labels = array(
 			'name'              => _x( 'Series', 'taxonomy general name', $this->plugin_name),
-			'singular_name'     => _x( 'Series', 'taxonomy singular name', $this->plugin_name ),
-			'search_items'      => __( 'Search Series', $this->plugin_name ),
-			'all_items'         => __( 'All Series', $this->plugin_name ),
-			'parent_item'       => __( 'Parent Series', $this->plugin_name ),
-			'parent_item_colon' => __( 'Parent Series:', $this->plugin_name ),
-			'edit_item'         => __( 'Edit Series', $this->plugin_name ),
-			'update_item'       => __( 'Update Series', $this->plugin_name ),
-			'add_new_item'      => __( 'Add New Series', $this->plugin_name ),
-			'new_item_name'     => __( 'New Series Name', $this->plugin_name ),
-			'menu_name'         => __( 'Series', $this->plugin_name ),
+			'singular_name'     => _x( 'Series', 'taxonomy singular name', 'share-the-word' ),
+			'search_items'      => __( 'Search Series', 'share-the-word' ),
+			'all_items'         => __( 'All Series', 'share-the-word' ),
+			'parent_item'       => __( 'Parent Series', 'share-the-word' ),
+			'parent_item_colon' => __( 'Parent Series:', 'share-the-word' ),
+			'edit_item'         => __( 'Edit Series', 'share-the-word' ),
+			'update_item'       => __( 'Update Series', 'share-the-word' ),
+			'add_new_item'      => __( 'Add New Series', 'share-the-word' ),
+			'new_item_name'     => __( 'New Series Name', 'share-the-word' ),
+			'menu_name'         => __( 'Series', 'share-the-word' ),
 		);
 
 		$labels = apply_filters($this->prefix . 'sermon_series_labels', $labels);
@@ -264,7 +264,7 @@ class Share_The_Word_Admin {
 			'show_in_rest' => true,
 			'type'         => 'string',
 			'single'       => true,
-			'description'  => __( 'The main bible verse of the sermon', $this->plugin_name ),
+			'description'  => __( 'The main bible verse of the sermon', 'share-the-word' ),
 		) );
 
 		// Preacher
@@ -272,7 +272,7 @@ class Share_The_Word_Admin {
 			'show_in_rest' => true,
 			'type'         => 'string',
 			'single'       => true,
-			'description'  => __( 'The preacher of the sermon', $this->plugin_name ),
+			'description'  => __( 'The preacher of the sermon', 'share-the-word' ),
 		) );
 
 		// Duration
@@ -280,7 +280,7 @@ class Share_The_Word_Admin {
 			'show_in_rest' => true,
 			'type'         => 'string',
 			'single'       => true,
-			'description'  => __( 'The duration of the (recorded) sermon. Eather the audio or video version.', $this->plugin_name ),
+			'description'  => __( 'The duration of the (recorded) sermon. Eather the audio or video version.', 'share-the-word' ),
 		) );
 
 		// Audio

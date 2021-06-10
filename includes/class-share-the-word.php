@@ -137,8 +137,8 @@ class Share_The_Word {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Share_The_Word_i18n();
-
+		$plugin_i18n = new Share_The_Word_i18n( $this->get_plugin_name() );
+		
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
@@ -182,7 +182,7 @@ class Share_The_Word {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_filter( 'the_content', $plugin_public, 'show_sermon_meta_media' );
+		$this->loader->add_filter( 'the_content', $plugin_public, 'show_sermon_meta_media', 1 );
 
 	}
 

@@ -8,143 +8,147 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-06-04 10:54+0200\n"
+"Language-Team: \n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de_DE\n"
 
 #: admin/class-share-the-word-admin.php:130
 msgid "Share The Word Settings"
-msgstr ""
+msgstr "Share The Word Einstellungen"
 
-#. #-#-#-#-#  share-the-word.pot (Share The Word 1.0.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: admin/class-share-the-word-admin.php:130
 msgid "Share The Word"
-msgstr ""
+msgstr "Share The Word"
 
 #: admin/class-share-the-word-admin.php:140
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: admin/class-share-the-word-admin.php:167
 msgctxt "post type general name"
 msgid "Sermons"
-msgstr ""
+msgstr "Predigten"
 
 #: admin/class-share-the-word-admin.php:168
 msgctxt "post type singular name"
 msgid "Sermon"
-msgstr ""
+msgstr "Predigt"
 
 #: admin/class-share-the-word-admin.php:169
 msgctxt "admin menu"
 msgid "Sermons"
-msgstr ""
+msgstr "Predigten"
 
 #: admin/class-share-the-word-admin.php:170
 msgctxt "add new on admin bar"
 msgid "Sermon"
-msgstr ""
+msgstr "Predigt"
 
 #: admin/class-share-the-word-admin.php:171
 msgctxt "sermon"
 msgid "Add New"
-msgstr ""
+msgstr "Erstellen"
 
 #: admin/class-share-the-word-admin.php:172
 msgid "Add New Sermon"
-msgstr ""
+msgstr "Erstelle neue Predigt"
 
 #: admin/class-share-the-word-admin.php:173
 msgid "New Sermon"
-msgstr ""
+msgstr "Neue Predigt"
 
 #: admin/class-share-the-word-admin.php:174
 msgid "Edit Sermon"
-msgstr ""
+msgstr "Bearbeite Predigt"
 
 #: admin/class-share-the-word-admin.php:175
 msgid "View Sermon"
-msgstr ""
+msgstr "Anzeigen"
 
 #: admin/class-share-the-word-admin.php:176
 msgid "All Sermons"
-msgstr ""
+msgstr "Alle Predigten"
 
 #: admin/class-share-the-word-admin.php:177
 msgid "Search Sermons"
-msgstr ""
+msgstr "Noch Predigten suchen"
 
 #: admin/class-share-the-word-admin.php:178
 msgid "Parent Sermons:"
-msgstr ""
+msgstr "Übergeordnete Predigt"
 
 #: admin/class-share-the-word-admin.php:179
 msgid "No sermons found."
-msgstr ""
+msgstr "Keine Predigten gefunden."
 
 #: admin/class-share-the-word-admin.php:180
 msgid "No sermons found in Trash."
-msgstr ""
+msgstr "Keine Predigten im Papierkorb gefunden."
 
 #: admin/class-share-the-word-admin.php:219
 msgctxt "taxonomy general name"
 msgid "Series"
-msgstr ""
+msgstr "Predigtreihen"
 
 #: admin/class-share-the-word-admin.php:220
 msgctxt "taxonomy singular name"
 msgid "Series"
-msgstr ""
+msgstr "Predigtreihe"
 
 #: admin/class-share-the-word-admin.php:221
 msgid "Search Series"
-msgstr ""
+msgstr "Nach Predigtreihen suchen"
 
 #: admin/class-share-the-word-admin.php:222
 msgid "All Series"
-msgstr ""
+msgstr "Alle Predigtreihen"
 
 #: admin/class-share-the-word-admin.php:223
 msgid "Parent Series"
-msgstr ""
+msgstr "Übergeordnete Predigtreihen:"
 
 #: admin/class-share-the-word-admin.php:224
 msgid "Parent Series:"
-msgstr ""
+msgstr "Übergeordnete Predigtreihe:"
 
 #: admin/class-share-the-word-admin.php:225
 msgid "Edit Series"
-msgstr ""
+msgstr "Bearbeite Predigtreihe"
 
 #: admin/class-share-the-word-admin.php:226
 msgid "Update Series"
-msgstr ""
+msgstr "Predigtreihe aktualisieren"
 
 #: admin/class-share-the-word-admin.php:227
 msgid "Add New Series"
-msgstr ""
+msgstr "Erstelle neue Predigtreihe"
 
 #: admin/class-share-the-word-admin.php:228
 msgid "New Series Name"
-msgstr ""
+msgstr "Neuer Predigtreihen Name"
 
 #: admin/class-share-the-word-admin.php:229
 msgid "Series"
-msgstr ""
+msgstr "Predigtreihen"
 
 #: admin/class-share-the-word-admin.php:267
 msgid "The main bible verse of the sermon"
-msgstr ""
+msgstr "Der zentrale Bibelvers der Predigt."
 
 #: admin/class-share-the-word-admin.php:275
 msgid "The preacher of the sermon"
-msgstr ""
+msgstr "Der Referent der Predigt."
 
 #: admin/class-share-the-word-admin.php:283
 msgid ""
 "The duration of the (recorded) sermon. Eather the audio or video version."
 msgstr ""
+"Die (aufgenommene) Dauer der Predigt. Entweder die der Audio- oder der "
+"Video-Version."
 
 #. Plugin URI of the plugin/theme
 msgid "https://github.com/tobikrs/share-the-word"
