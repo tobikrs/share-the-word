@@ -63,6 +63,28 @@ class Share_The_Word_Admin {
 		$this->prefix = $prefix;
 		$this->version = $version;
 
+		$this->load_dependencies();
+	}
+
+	/**
+	 * Load the required dependencies for the Admin facing functionality.
+	 *
+	 * Include the following files that make up the plugin:
+	 *
+	 * - Share_The_Word_Admin_Settings. Registers the admin settings and page.
+	 *
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function load_dependencies() {
+
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) .  'admin/class-share-the-word-settings.php';
+
 	}
 
 	/**
@@ -127,6 +149,7 @@ class Share_The_Word_Admin {
 	* @since 1.0.0
 	*/
 	public function add_plugin_admin_menu() {
+		return;
 		add_options_page( __( 'Share The Word Settings', 'share-the-word' ), __( 'Share The Word', 'share-the-word' ), 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
@@ -137,18 +160,9 @@ class Share_The_Word_Admin {
 	*/
 	public function add_action_links( $links ) {
 		$settings_link = array(
-			'<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __('Settings', $this->plugin_name) . '</a>',
+			'<a href="' . admin_url( 'options-general.php?page=' . $this->prefix . 'options' ) . '">' . __('Settings', $this->plugin_name) . '</a>',
 		);
 		return array_merge( $settings_link, $links );
-	}
-
-	/**
-	* Render the settings page for this plugin.
-	*
-	* @since 1.0.0
-	*/
-	public function display_plugin_setup_page() {
-		include_once( 'partials/share-the-word-admin-display.php' );
 	}
 
 	/**
@@ -159,9 +173,10 @@ class Share_The_Word_Admin {
 	 * @uses 	register_post_type()
 	 */
 	public function new_cpt_sermon() {
+		$general_option = get_option( $this->prefix . 'general_options');
 
 		$cpt_name 	= $this->prefix . 'sermon';
-		$rewrite_slug = apply_filters( $this->prefix . 'sermons_rewrite_slug', 'sermon' );
+		$rewrite_slug = apply_filters( $this->prefix . 'sermons_rewrite_slug', isset( $general_option['sermon_permalink'] ) ? $general_option['sermon_permalink'] : 'sermon' );
 
 		$labels = array(
 			'name'               => _x( 'Sermons', 'post type general name', 'share-the-word' ),

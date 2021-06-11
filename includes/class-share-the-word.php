@@ -117,6 +117,11 @@ class Share_The_Word {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-share-the-word-admin.php';
 
 		/**
+		 * The class responsible for providing a admin page to manage the plugin settings.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-share-the-word-settings.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -154,6 +159,8 @@ class Share_The_Word {
 
 		$plugin_admin = new Share_The_Word_Admin( $this->get_plugin_name(), $this->get_plugin_prefix(), $this->get_version() );
 
+		$plugin_settings = new Share_The_Word_Admin_Settings( $this->get_plugin_name(), $this->get_plugin_prefix(), $this->get_version() );
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
@@ -162,8 +169,12 @@ class Share_The_Word {
 		$this->loader->add_action( 'init', $plugin_admin, 'new_sermon_meta' );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_sermon_meta_block' );
 
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+		// Settings
+		$this->loader->add_action( 'admin_menu', $plugin_settings, 'add_plugin_admin_menu' );
+		$this->loader->add_action( 'admin_init', $plugin_settings, 'initialize_settings' );
+		$this->loader->add_filter( 'allowed_options', $plugin_settings, 'allow_options' );
 
+		// Add Settings Link at Plugins Admins Page
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
 		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
 	}
